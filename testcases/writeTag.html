@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<script src="resources/nfc-helpers.js"></script>
+<script>
+'use strict';
+
+test(t => { assert_true(window.testRunner instanceof Object); t.done(); },
+     'window.testRunner is required for the following tests.');
+
+promise_test(() => {
+  testRunner.setMockNFCDeviceAdapter('ReadonlyTag');
+  navigator.nfc.push(
+    '{ "prop1": "value1", "prop2": "value2" }'
+  ).then(() => {
+    console.log("Message pushed.");
+  })
+  return assert_promise_reject_reaonly_tag(
+    navigator.nfc.push(
+      '{ "prop1": "value1", "prop2": "value2" }'
+    ).then(() => {
+      console.log("Message pushed.");
+    }));
+}, 'Reject to push data to a Readonly Tag');
+
+promise_test(() => {
+  testRunner.setMockNFCDeviceAdapter('EmptyTag');
+  navigator.nfc.watch((message) => {
+    if (message.data[0].recordType == 'empty') {
+      testRunner.setMockNFCDeviceAdapter('NonaccessableTag');
+      return assert_promise_reject_nonaccessable_tag(
+        navigator.nfc.push({
+          url: "/custom/path",
+          data: [{ recordType: "text", data: 'Hello World' }]
+        }));
+    } else {
+      return new DOMException(
+          'Tag is not Empty',
+          'EmptyTag is not empty');
+    }
+})
+
+</script>
