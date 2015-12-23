@@ -32,7 +32,7 @@ promise_test(() => {
         navigator.nfc.push({
           url: "/custom/path",
           data: [{ recordType: "text", data: 'Hello World' }]
-        }));
+        }), 'Tag is out of range, Reject to write data into the Tag');
     } else {
       return new DOMException(
           'Tag is not Empty',
