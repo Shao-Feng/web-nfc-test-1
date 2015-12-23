@@ -51,7 +51,7 @@ interface TestRunner {
   void setMockNFCDeviceAdapter(DOMString deviceAdapterName);
                
   // Sets mock data for NFC (operation) that would be executed from layout test.
-  void setMockNFCData(DOMString operation,
+  void setMockNFCAdapterData(DOMString operation,
                       DOMString messageURL,
                       DOMString[] recordTypes,
                       DOMString[] mediaTypes,
