@@ -33,25 +33,6 @@ partial interface Window {
 // https://codereview.chromium.org/1543823002/
 interface TestRunner {
 
-  // Sets NFC Event (eventType) including:
-  // TagFound, TagLost
-  // PeerFound, PeerLost
-  void setMockNFCEventData(DOMString eventType);
-  
-  //Get the list of events that have been recorded after TagFound or PeerFound
-  //each event is encoded as string, as below:
-  // "tag-found"
-  // "tag-read-success"
-  // "tag-read-rejected"
-  // "tag-write-success"
-  // "tag-write-rejected"
-  // "peer-found"
-  // "peer-read-success"
-  // "peer-read-rejected"
-  // "peer-write-success"
-  // "peer-write-rejected"
-  void getMockNFCEventData(NFCEventDataCallback callback);
-
   // Sets mock NFC device adapter (deviceAdapterName) that would be executed from layout test.
   // once this method is invoked, the dbus event of NFC device must be replace with the mock adapter.
   //including: 
